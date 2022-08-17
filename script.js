@@ -1,54 +1,48 @@
-
-
 let btn_generate = document.getElementById("btn-generate");
 let btn_print = document.getElementById("btn-print");
 let btn_clear = document.getElementById("btn-clear");
 let qr_code = document.getElementById("qr-code");
 let file_url = document.getElementById("file-url");
 
-let trash_can = document.getElementsByClassName(".the_input i");
+let qrcode = undefined;
 
-let qrcode = undefined
-
-btn_generate.addEventListener("click", generate_qrcode)
+btn_generate.addEventListener("click", generate_qrcode);
+btn_print.addEventListener("click", pdf);
 
 function generate_qrcode(value) {
-    if (qrcode === undefined) {
-        qrcode = new QRCode(qr_code, {
-            text: file_url.value,
-            width: 256,
-            height: 256,
-            colorDark: "#000000",
-            colorLight: "#fefefe",
-            correctLevel: QRCode.CorrectLevel.H
-        });
-    } else {
-        qrcode.clear();
-        qrcode.makeCode(file_url.value);
-    }
+  if (qrcode === undefined) {
+    qrcode = new QRCode(qr_code, {
+      text: file_url.value,
+      width: 256,
+      height: 256,
+      colorDark: "#000000",
+      colorLight: "#fefefe",
+      correctLevel: QRCode.CorrectLevel.H,
+    });
+  } else {
+    qrcode.clear();
+    qrcode.makeCode(file_url.value);
+  }
 }
 
 
-// trash_can.addEventListener("click", clear_qrcode)
-
-btn_print.addEventListener("click", pdf)
-
 function clear_qrcode() {
-    qrcode = undefined
-    qr_code.innerHTML = "";
-    file_url.value = "";
+  qrcode = undefined;
+  qr_code.innerHTML = "";
+  file_url.value = "";
 }
 
 function pdf() {
-    var canvas = document.getElementById('qr-code')
-    // save canvas image as data url (png format by default)
-    // console.log(canvas);
-    var dataURL = canvas.toDataURL();
+  var pdf = new jsPDF();
 
-    var imgData = dataURL;
+  pdf.setFontSize(15);
+  pdf.text("Sampling initiative: ", 25, 20);
 
-    var doc = new jsPDF();
-    doc.addImage(imgData, 'JPEG', 15, 40);
+  pdf.setFontSize(12);
+  pdf.text("Scan the QR code above to open the file", 66, 120);
 
-    doc.save('role.pdf');
+  let base64Image = qr_code.children[1].getAttribute("src");
+  console.log(base64Image);
+  pdf.addImage(base64Image, "png", 70, 40);
+  pdf.save("generated.pdf");
 }
