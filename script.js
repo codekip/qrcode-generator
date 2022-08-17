@@ -6,6 +6,8 @@ let btn_clear = document.getElementById("btn-clear");
 let qr_code = document.getElementById("qr-code");
 let file_url = document.getElementById("file-url");
 
+let trash_can = document.getElementsByClassName(".the_input i");
+
 let qrcode = undefined
 
 btn_generate.addEventListener("click", generate_qrcode)
@@ -26,8 +28,27 @@ function generate_qrcode(value) {
     }
 }
 
-btn_clear.addEventListener("click", function () {
+
+// trash_can.addEventListener("click", clear_qrcode)
+
+btn_print.addEventListener("click", pdf)
+
+function clear_qrcode() {
     qrcode = undefined
     qr_code.innerHTML = "";
     file_url.value = "";
-})
+}
+
+function pdf() {
+    var canvas = document.getElementById('qr-code')
+    // save canvas image as data url (png format by default)
+    // console.log(canvas);
+    var dataURL = canvas.toDataURL();
+
+    var imgData = dataURL;
+
+    var doc = new jsPDF();
+    doc.addImage(imgData, 'JPEG', 15, 40);
+
+    doc.save('role.pdf');
+}

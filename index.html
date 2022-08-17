@@ -8,12 +8,17 @@
     <title>QR code generator</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" async></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
     <script src="script.js" async></script>
 </head>
 
@@ -23,13 +28,14 @@
         <div class="hold-all">
             <h2 id="heading">QR CODE GENERATOR</h2>
             <div id="qr-code"></div>
-            <input type="text" name="url" class="form-control" id="file-url" placeholder="Enter file link here...">
+            <div class="the-input">
+
+                <input type="text" name="url" class="form-control" id="file-url" placeholder="Enter file link here...">
+                <i class="fa-solid fa-trash-can" onclick="clear_qrcode()"></i>
+            </div>
             <div class="buttons d-flex justify-content-between">
                 <button class="btn btn-primary" id="btn-generate">GENERATE CODE</button>
-                <button class="btn btn-danger" id="btn-clear">CLEAR CODE</button>
-            </div>
-            <div class="printit">
-                <button id="btn-print" class=" btn btn-success btn-lg">PRINT QR CODE</button>
+                <button id="btn-print" class=" btn btn-success">PRINT QR CODE</button>
             </div>
         </div>
     </div>
